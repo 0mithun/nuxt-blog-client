@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  watchQuery: true,
+   middleware: ['guest'],
   async asyncData({params, query, app}){
     const q = await Object.keys(query)
       .map(k=>{

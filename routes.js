@@ -39,6 +39,12 @@ const routes = [
     name: 'password.reset',
     component: page('auth/password/password-reset')
   },
+
+  {
+    path:'/dashboard',
+    name: 'dashboard',
+    component: page('user/dashboard')
+  },
 ]
 
 export default routes;

@@ -10,38 +10,28 @@
           <nuxt-link :to="{name:'resend'}">Resend verification email</nuxt-link>
         </alert-error>
         <div class="form-group">
-          <input
+          <base-input
+            :form="form"
             field="email"
-            placeholder="Email"
-            class="form-control"
             v-model="form.email"
-            :class="{'is-invalid': form.errors.has('email')}"
-          >
-          <has-error :form="form" field="email"></has-error>
-
+            placeholder="Enter your email"
+            inputType="text"></base-input>
         </div>
         <div class="form-group">
-          <input
-            field="password"
-            inputType="password"
-            placeholder="Password"
-            class="form-control"
-            v-model="form.password"
-            :class="{'is-invalid': form.errors.has('password')}"
-          >
-          <has-error :form="form" field="password"></has-error>
-
+          <base-input
+          :form="form"
+          field="password"
+          v-model="form.password"
+          placeholder="Enter your password"
+          inputType="password"></base-input>
         </div>
+
+
         <div class="mt-4 mb-4 clearfix">
           <nuxt-link :to="{name:'password.email'}">Forgot Password</nuxt-link>
         </div>
         <div class="text-right">
-          <button class="btn btn-primary" :disabled="form.busy">
-            <span v-if="form.busy">
-              <i class="fas fa-spinner fa-spin"></i>
-            </span>
-            Login
-          </button>
+            <base-button :loading="form.busy">Login</base-button>
         </div>
         <p class="font-14 fw-400 text-center mt-4">
           Don't have an account yet? <nuxt-link :to="{name:'register'}">Sign Up</nuxt-link>
@@ -53,11 +43,12 @@
 
 <script>
 export default {
+    middleware: ['guest'],
     data(){
       return{
         form: this.$vform({
           'email':'',
-          'password':''
+          'password':'',
         })
       }
     },

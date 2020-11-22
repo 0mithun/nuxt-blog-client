@@ -12,45 +12,37 @@
           </p>
         </alert-success>
         <div class="form-group">
-          <input
+          <base-input
             :form="form"
             :readonly="true"
             field="email"
             v-model="form.email"
             placeholder="Email"
-            class="form-control"
-          ></input>
+          ></base-input>
         </div>
 
         <div class="form-group">
-          <input
+          <base-input
             :form="form"
             inputType="password"
             field="password"
             v-model="form.password"
             placeholder="New Password"
-            class="form-control"
-          ></input>
+          ></base-input>
         </div>
 
         <div class="form-group">
-          <input
+          <base-input
             :form="form"
             inputType="password"
             field="password_confirmation"
             v-model="form.password_confirmation"
             placeholder="Confirm New Password"
-            class="form-control"
-          ></input>
+          ></base-input>
         </div>
 
         <div class="text-right">
-          <button class="btn btn-primary" :loading="form.busy">
-            <span v-if="form.busy">
-              <i class="fas fa-spinner fa-spin"></i>
-            </span>
-            Reset Password
-          </button>
+          <base-button :loading="form.busy">Reset Password</base-button>
         </div>
       </form>
     </div>
@@ -59,6 +51,7 @@
 
 <script>
 export default {
+   middleware: ['guest'],
   data() {
     return {
       status: '',

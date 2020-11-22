@@ -27,7 +27,8 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '~plugins/vform'
+    '~plugins/vform',
+    '~components/_global',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -51,7 +52,7 @@ export default {
     '@nuxtjs/dotenv',
 
     //https://auth.nuxtjs.org/guide/setup.html
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -78,6 +79,13 @@ export default {
         tokenRequired: true,
         tokenType: 'bearer'
       }
-    }
+    },
+    rewriteRedirects: false,
+
+    redirect: {
+      login: "/login",
+      logout: "/",
+      home: "/",
+    },
   }
 }

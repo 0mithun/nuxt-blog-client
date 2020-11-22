@@ -5,65 +5,49 @@
       <form class="auth-form" @submit.prevent="submit" >
         <alert-success :form="form">We have sent you an email to activate your account.</alert-success>
         <div class="form-group">
-          <input
-          inputType="text"
-            field="name"
-            placeholder="Full Name"
-            v-model="form.name"
-            class="form-control"
-            :class="{ 'is-invalid': form.errors.has('name') }"
-            >
-            <has-error :form="form" field="name"></has-error>
+            <base-input
+              :form="form"
+              field="name"
+              v-model="form.name"
+              placeholder="Full Name"
+            ></base-input>
         </div>
         <div class="form-group">
-          <input
-            inputType="text"
-            field="username"
-            placeholder="Username"
-            class="form-control"
-            v-model="form.username"
-            :class="{ 'is-invalid': form.errors.has('username') }"
-            >
-            <has-error :form="form" field="username"></has-error>
+            <base-input
+              :form="form"
+              field="username"
+              v-model="form.username"
+              placeholder="Username"
+            ></base-input>
+        </div>
+        <div class="form-group"><base-input
+              :form="form"
+              field="email"
+              v-model="form.email"
+              placeholder="Email"
+            ></base-input>
         </div>
         <div class="form-group">
-          <input
-            inputType="email"
-            field="email"
-            placeholder="Email"
-            class="form-control"
-            v-model="form.email"
-          :class="{ 'is-invalid': form.errors.has('email') }"
-            >
-            <has-error :form="form" field="email"></has-error>
+          <base-input
+              :form="form"
+              field="password"
+              v-model="form.password"
+              placeholder="password"
+              inputType="password"
+            ></base-input>
         </div>
         <div class="form-group">
-          <input
-            inputType="password"
-            field="password"
-            placeholder="Password"
-            class="form-control"
-            v-model="form.password"
-          :class="{ 'is-invalid': form.errors.has('password') }"
-            >
-            <has-error :form="form" field="password"></has-error>
-        </div>
-        <div class="form-group">
-          <input
-            inputType="password"
-            field="password_confirmation"
-            placeholder="Confirm Password"
-            class="form-control"
-            v-model="form.password_confirmation"
-          :class="{ 'is-invalid': form.errors.has('password_confirmation') }"
-            >
-            <has-error :form="form" field="password_confirmation"></has-error>
+          <base-input
+              :form="form"
+              field="password_confirmation"
+              v-model="form.password_confirmation"
+              placeholder="Password Confirmation"
+              inputType="password"
+            ></base-input>
         </div>
 
         <div class="text-right">
-          <button class="btn btn-primary" :disabled="form.busy">
-            <span v-if="form.busy"><i class="fas fa-spinner fa-spin"></i></span>
-            Register</button>
+          <base-button :loading="form.busy">Register</base-button>
         </div>
         <p class="font-14 fw-400 text-center mt-4">
           Already have an account? <nuxt-link :to="{name:'login'}">Sign In</nuxt-link>
@@ -75,6 +59,7 @@
 
 <script>
 export default {
+   middleware: ['guest'],
   data(){
     return {
       form: this.$vform({
