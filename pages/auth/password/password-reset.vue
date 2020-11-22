@@ -8,43 +8,49 @@
         <alert-success :form="form">
           {{ status }}
           <p>
-            <nuxt-link to="/login">Proceed to login</nuxt-link>
+            <nuxt-link :to="{name:'login'}">Proceed to login</nuxt-link>
           </p>
         </alert-success>
         <div class="form-group">
-          <base-input
+          <input
             :form="form"
             :readonly="true"
             field="email"
             v-model="form.email"
             placeholder="Email"
-          ></base-input>
+            class="form-control"
+          ></input>
         </div>
 
         <div class="form-group">
-          <base-input
+          <input
             :form="form"
             inputType="password"
             field="password"
-            v-model="form.email"
+            v-model="form.password"
             placeholder="New Password"
-          ></base-input>
+            class="form-control"
+          ></input>
         </div>
 
         <div class="form-group">
-          <base-input
+          <input
             :form="form"
             inputType="password"
             field="password_confirmation"
             v-model="form.password_confirmation"
             placeholder="Confirm New Password"
-          ></base-input>
+            class="form-control"
+          ></input>
         </div>
 
         <div class="text-right">
-          <base-button :loading="form.busy">
+          <button class="btn btn-primary" :loading="form.busy">
+            <span v-if="form.busy">
+              <i class="fas fa-spinner fa-spin"></i>
+            </span>
             Reset Password
-          </base-button>
+          </button>
         </div>
       </form>
     </div>
@@ -53,7 +59,6 @@
 
 <script>
 export default {
-  middleware: ['guest'],
   data() {
     return {
       status: '',

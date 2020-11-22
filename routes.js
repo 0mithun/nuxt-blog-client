@@ -24,6 +24,21 @@ const routes = [
     name: 'verify',
     component: page('auth/verification/verify')
   },
+  {
+    path:'/verification/resend',
+    name: 'resend',
+    component: page('auth/verification/resend')
+  },
+  {
+    path:'/password/email',
+    name: 'password.email',
+    component: page('auth/password/reset-email')
+  },
+  {
+    path:'/password/reset/:token',
+    name: 'password.reset',
+    component: page('auth/password/password-reset')
+  },
 ]
 
 export default routes;

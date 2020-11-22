@@ -76,16 +76,16 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <img class="user-thumb" src="~assets/images/profile.png" />
+              <img class="user-thumb" :src="$auth.user.photo_url" />
               <div class="usr-info">
                 <span class="user-name font-14 fw-500">
                   {{
-                  <!-- $auth.user.name -->
+                  $auth.user.name
                   }}
                 </span>
                 <span class="user-deg font-10 fw-300">
                   {{
-                  <!-- $auth.user.tagline -->
+                  $auth.user.tagline
                   }}
                 </span>
                 <span class="down-chevron">
@@ -110,7 +110,7 @@
                 Setting
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#" @click.prevent="logout">
+              <a class="dropdown-item" href="" @click.prevent="logout">
                 <i class="fa fa-lock"></i>
                 Sign Out
               </a>
@@ -128,7 +128,7 @@
 export default {
   methods: {
     logout() {
-      // this.$auth.logout();
+      this.$auth.logout();
     }
   }
 };

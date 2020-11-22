@@ -5,11 +5,16 @@
         Login
       </h1>
       <form class="auth-form" @submit.prevent="submit">
+        <alert-error :form="form" v-if="form.errors.has('verification')">
+          {{ form.errors.get('verification') }}
+          <nuxt-link :to="{name:'resend'}">Resend verification email</nuxt-link>
+        </alert-error>
         <div class="form-group">
           <input
             field="email"
             placeholder="Email"
             class="form-control"
+            v-model="form.email"
             :class="{'is-invalid': form.errors.has('email')}"
           >
           <has-error :form="form" field="email"></has-error>
@@ -21,12 +26,14 @@
             inputType="password"
             placeholder="Password"
             class="form-control"
+            v-model="form.password"
             :class="{'is-invalid': form.errors.has('password')}"
           >
           <has-error :form="form" field="password"></has-error>
 
         </div>
         <div class="mt-4 mb-4 clearfix">
+          <nuxt-link :to="{name:'password.email'}">Forgot Password</nuxt-link>
         </div>
         <div class="text-right">
           <button class="btn btn-primary" :disabled="form.busy">
@@ -56,7 +63,13 @@ export default {
     },
     methods:{
       submit(){
+        this.$auth.loginWith('local',{data:this.form})
+          .then(res=>{
+            // this.form.reset();
+          }).catch(err=>{
+              this.form.errors.set(err.response.data.errors)
 
+          })
       }
     }
 };

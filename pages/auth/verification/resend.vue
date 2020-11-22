@@ -12,18 +12,24 @@
           We have resent the verification email
         </alert-success>
         <div class="form-group">
-          <base-input
+          <input
             :form="form"
             field="email"
+            class="form-control"
             v-model="form.email"
             placeholder="Email"
-          ></base-input>
+            :class="{'is-invalid': form.errors.has('email')}"
+          >
+          <has-error :form="form" field="email"></has-error>
         </div>
 
         <div class="text-right">
-          <base-button :loading="form.busy">
+          <button  class="btn btn-primary" :disabled="form.busy">
+            <span v-if="form.busy">
+              <i class="fas fa-spinner fa-spin"></i>
+            </span>
             Resend
-          </base-button>
+          </button>
         </div>
       </form>
     </div>
@@ -32,21 +38,23 @@
 
 <script>
 export default {
-  middleware: ['guest'],
   data() {
     return {
       form: this.$vform({
-        email: ''
+        'email':''
       })
     };
   },
   methods: {
-    submit() {
-      this.form
-        .post(`/verification/resend`)
-        .then(res => this.form.reset())
-        .catch(e => console.log(e));
-    }
+      submit(){
+        this.form.post('/verification/resend')
+          .then((res) => {
+            this.form.reset();
+
+          }).catch((err) => {
+            console.log(err)
+          });
+      }
   }
 };
 </script>
