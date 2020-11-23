@@ -29,6 +29,10 @@ export default {
   plugins: [
     '~plugins/vform',
     '~components/_global',
+    {
+      src: '~plugins/gmaps',
+      ssr: false
+    }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

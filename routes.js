@@ -41,10 +41,41 @@ const routes = [
   },
 
   {
-    path:'/dashboard',
-    name: 'dashboard',
-    component: page('user/dashboard')
+    path:'/upload',
+    name: 'designs.upload',
+    component: page('user/designs/create')
   },
+  {
+    path:'/designs/:id/edit',
+    name: 'designs.edit',
+    component: page('user/designs/edit')
+  },
+  {
+    path:'/settings',
+    name: 'settings',
+    component: page('user/settings/index'),
+    children:[
+      {
+        path:'', redirect:{name:'dashboard'}},
+        {
+          path:'dashboard',
+          name:'dashboard',
+          component: page('user/settings/dashboard')
+        },
+        {
+          path:'profile',
+          name:'profile',
+          component: page('user/settings/profile')
+        },
+        {
+          path:'design',
+          name:'design',
+          component: page('user/settings/design')
+        },
+    ]
+  },
+
+
 ]
 
 export default routes;

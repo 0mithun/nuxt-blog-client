@@ -33,9 +33,9 @@ export default {
   data() {
     return {
       links: [
-        { title: 'Dashboard', route: 'settings.dashboard' },
-        { title: 'Update Profile', route: 'settings.profile' },
-        { title: 'Designs', route: 'settings.designs' }
+        { title: 'Dashboard', route: 'dashboard' },
+        { title: 'Update Profile', route: 'profile' },
+        { title: 'Designs', route: 'design' }
       ]
     };
   }

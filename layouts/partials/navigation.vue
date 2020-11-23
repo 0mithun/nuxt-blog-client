@@ -41,9 +41,9 @@
           </form>
         </div>
         <div class="upload-shot white-path font-14 fw-500 text-uppercase mr-auto">
-          <a href="/upload" class="primary-bg-color text-white">
+          <nuxt-link :to="{name:'designs.upload'}" class="primary-bg-color text-white">
             <i class="fas fa-cloud-upload-alt"></i> Upload
-          </a>
+          </nuxt-link>
         </div>
       </div>
 
@@ -97,18 +97,18 @@
               <div class="dropdown-title-group font-12 fw-500">
                 <span class="dropdown-title text-uppercase">Your Account</span>
               </div>
-              <nuxt-link to="/settings/dashboard" class="dropdown-item mt-28">
+              <nuxt-link :to="{name:'dashboard'}" class="dropdown-item mt-28">
                 <i class="fas fa-tachometer-alt"></i>
                 Dashboard
               </nuxt-link>
-              <a class="dropdown-item" href="#" title="Profile">
+              <nuxt-link :to="{name:'profile'}" class="dropdown-item"  title="Profile">
                 <i class="fa fa-user"></i>
                 Profile
-              </a>
-              <a class="dropdown-item" href="#" title="Setting">
+              </nuxt-link>
+              <nuxt-link :to="{name:'settings'}" class="dropdown-item"  title="Setting">
                 <i class="fa fa-cogs"></i>
                 Setting
-              </a>
+              </nuxt-link>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="" @click.prevent="logout">
                 <i class="fa fa-lock"></i>

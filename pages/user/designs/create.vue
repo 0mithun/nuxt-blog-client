@@ -14,14 +14,14 @@
           <div class="col-md-6">
             <div class="card bg-white shadow-sm">
               <div class="d-flex flex-column justify-content-center p-1">
-                <div class="alert alert-danger" >
+                <div class="alert alert-danger" v-if="error">
                   <p>An error occurred during the upload process</p>
-                  <p></p>
+                  <p>{{ error }}</p>
                 </div>
-                <slim-cropper >
+                <slim-cropper :options="slimOptions">
                   <input type="file" name="image" />
                 </slim-cropper>
-                <div class="text-success caption-sm mt-2" >
+                <div class="text-success caption-sm mt-2" v-if="uploading" >
                   <i class="fas fa-spinner fa-spin"></i>
                 </div>
               </div>
@@ -41,8 +41,40 @@
 </template>
 
 <script>
+import Slim from '@/components/slim/slim.vue'
 export default {
-
+  middleware: ['auth'],
+  components:{
+    'slim-cropper': Slim
+  },
+  data(){
+    return{
+      slimOptions:{
+        service: this.slimService,
+        post:'output',
+        defaultInputName:'image',
+        minSize:'200,300',
+        label:'Select image...',
+        maxFileSize:2
+      },
+      uploading:false,
+      error:''
+    }
+  },
+  methods:{
+    slimService(formdata, progress, success, failure, slim){
+      this.uploading = true;
+      this.$axios.post('designs', formdata)
+        .then(res=>{
+          this.$router.push({name:'designs.edit',params:{id:res.data.id}})
+        }).catch(err=>{
+          const message = err.response.data.errors;
+          this.error = message[Object.keys(message)[0]][0]
+          failure(500)
+        })
+        .finally(()=>this.uploading = false)
+    }
+  }
 };
 </script>
 
