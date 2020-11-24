@@ -9,31 +9,34 @@
               <!-- Single Image -->
               <div class="post-detail">
                 <div class="single-img">
-                  <!-- <img :src="design.images.large" /> -->
+                  <img :src="design.images.large" />
                 </div>
               </div>
               <!-- End Single Image -->
               <!-- Design Detail Text -->
               <div class="desing-text font-16 fw-400 pb-3 pt-2">
                 <p>
-
+                  {{ design.description }}
                 </p>
               </div>
               <!-- End Design Detail Text -->
               <!-- Design Comments -->
               <div class="design-comments mt-3">
                 <h1 class="font-16 fw-300 mb-4">
-                  <strong class="fw-500">comments</strong>
+                  <strong class="fw-500">{{comments.length}} comments</strong>
                 </h1>
                 <ul class="comment-list">
+                    <DesignComment v-for="comment in comments" :key="comment.id" :comment="comment" @deleted="handleDelete"></DesignComment>
                 </ul>
               </div>
 
-              <template >
-                <form >
+              <template v-if="$auth.loggedIn">
+                <form @submit.prevent="save">
                   <base-textarea
                     field="body"
                     placeholder="Enter a comment"
+                    :form="form"
+                    v-model="form.body"
                   ></base-textarea>
 
                   <div class="mt-2 text-right">
@@ -53,26 +56,28 @@
                 <!-- Designer info -->
                 <div class="modal-user-meta white-bg-color">
                   <a class="float-left" href="#" title="Neba">
-                    <!-- <img :src="design.user.photo_url" alt="Neba" /> -->
+                    <img :src="design.user.photo_url" alt="Neba" />
                   </a>
                   <div class="modal-user-detail">
                     <h1 class="font-13 fw-500">
                       <a href="#">
-
+                        {{ design.user.name }}
                       </a>
                     </h1>
                     <p class="font-12 fw-300 mt-1">
                       <span class="shot-by">
-
+                          {{ design.user.tagline }}
                       </span>
                     </p>
                     <p class="font-12 fw-300  mt-1">
+                      {{ design.created_at_dates.created_at_human }}
                     </p>
                   </div>
                 </div>
                 <!-- End Designer info -->
                 <!-- Designer Design Info -->
                 <ul class="details-side-meta font-14 fw-400">
+                    <DesignLike :design="design"></DesignLike>
 
                   <li class="d-table w-100">
                     <div class="stats-txt d-table-cell w-100">
@@ -130,10 +135,14 @@
                   </h2>
                   <div
                     class="designs-tag font-14 fw-300"
+                    v-if="design.tag_list"
                   >
                     <a
+                      v-for="(tag, i) in design.tag_list.tags"
+                      :key="tag.id"
+                      :href="`/tags/${design.tag_list.normalized[i]}`"
                     >
-
+                    {{ design.tag_list.normalized[i] }}
                     </a>
                   </div>
                 </div>
@@ -149,8 +158,49 @@
 </template>
 
 <script>
+import DesignComment from '~/components/DesignComment'
+import DesignLike from '~/components/DesignLike'
 export default {
-
+  components:{
+    DesignComment,
+    DesignLike
+  },
+  data(){
+    return {
+      form: this.$vform({
+        body:""
+      })
+    }
+  },
+  async asyncData({$axios, redirect, params, error}){
+    try {
+      const design = await $axios.$get(`/designs/slug/${params.slug}`)
+      return {design : design.data, comments:design.data.comments}
+    } catch (err) {
+      if(err.response.status === 404){
+        error({statusCode : 404, message:'Design not found'})
+      }else if(err.response.status === 401){
+        redirect('/');
+      }else{
+        error({statusCode : 500, message:'Server Error'})
+      }
+    }
+  },
+  methods:{
+    handleDelete(id){
+      const comments = this.comments.filter((comment)=>comment.id !== id)
+      this.comments = comments;
+    },
+    save(){
+      this.form.post(`designs/${this.design.id}/comments`)
+        .then(res=>{
+           this.form.reset();
+          this.comments = [...this.comments, res.data.data]
+        }).catch(err=>{
+          console.log(err)
+        })
+    }
+  }
 };
 </script>
 

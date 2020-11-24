@@ -74,6 +74,16 @@ const routes = [
         },
     ]
   },
+  {
+    path: '/designs',
+    name:'designs.search',
+    component: page('designs/search'),
+  },
+  {
+    path: '/design/:slug',
+    name:'designs.show',
+    component: page('designs/show'),
+  }
 
 
 ]

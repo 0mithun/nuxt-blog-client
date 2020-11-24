@@ -18,7 +18,8 @@
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav font-14 fw-300">
           <li class="nav-item">
-            <a href="/designs" class="nav-link">Designs</a>
+            <!-- <a href="/designs" class="nav-link">Designs</a> -->
+            <nuxt-link :to="{name:'designs.search'}" class="nav-link">Designs</nuxt-link>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" title="Designers">Designers</a>

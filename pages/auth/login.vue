@@ -56,7 +56,7 @@ export default {
       submit(){
         this.$auth.loginWith('local',{data:this.form})
           .then(res=>{
-            // this.form.reset();
+            this.form.reset();
           }).catch(err=>{
               this.form.errors.set(err.response.data.errors)
 
